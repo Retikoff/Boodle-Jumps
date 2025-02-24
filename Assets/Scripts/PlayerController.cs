@@ -1,5 +1,7 @@
 using System.Collections;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,15 +10,19 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator anim; 
     SpriteRenderer _renderer;
-
+    Vector2 screenSize;
     float inputX;
     Vector3 targetPos;
+
+    private const float DEATHZONE_OFFSET_Y = 1.5f; 
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
+
+        screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
     }
 
     private void Update()
@@ -26,9 +32,30 @@ public class PlayerController : MonoBehaviour
 
         _renderer.flipX = inputX != 0 ? inputX < 0 : _renderer.flipX;
         //maybe this code doesnt effect at all
-        if(transform.rotation.x != 0){
-            transform.eulerAngles = new Vector3(0,transform.localEulerAngles.y,transform.localEulerAngles.z);
+        if(transform.rotation.x != 0)
+        {
+            transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, transform.localEulerAngles.z);
         }
+
+        if(transform.position.x < -screenSize.x)
+        {
+            transform.position = new Vector3(screenSize.x, transform.position.y, 0);
+        }
+
+        if(transform.position.x > screenSize.x)
+        {
+            transform.position = new Vector3(-screenSize.x, transform.position.y, 0);
+        }
+
+        if(transform.position.y < Camera.main.transform.position.y - screenSize.y - DEATHZONE_OFFSET_Y)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void Jump(float distance)
@@ -62,13 +89,13 @@ public class PlayerController : MonoBehaviour
         {
             targetPos = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
             transform.position = targetPos;
-            anim.SetBool("inAir", true);
+            
         }
 
         if (GUI.Button(new Rect(110, 0, 100, 50), "Jump"))
         {
             this.Jump(10f);
-            anim.SetBool("inAir", true);
+            
         }
     }
 
