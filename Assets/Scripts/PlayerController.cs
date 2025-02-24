@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator anim; 
     SpriteRenderer _renderer;
-    Vector2 screenSize;
     float inputX;
     Vector3 targetPos;
 
@@ -21,8 +20,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
-
-        screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
     }
 
     private void Update()
@@ -32,22 +29,26 @@ public class PlayerController : MonoBehaviour
 
         _renderer.flipX = inputX != 0 ? inputX < 0 : _renderer.flipX;
         //maybe this code doesnt effect at all
+        //lock x rotation
         if(transform.rotation.x != 0)
         {
             transform.eulerAngles = new Vector3(0, transform.localEulerAngles.y, transform.localEulerAngles.z);
         }
 
-        if(transform.position.x < -screenSize.x)
+        //teleport to another bound 
+        if(transform.position.x < -WorldOptions.screenSize.x)
         {
-            transform.position = new Vector3(screenSize.x, transform.position.y, 0);
+            transform.position = new Vector3(WorldOptions.screenSize.x, transform.position.y, 0);
         }
-
-        if(transform.position.x > screenSize.x)
+        //teleport to another bound 
+        if(transform.position.x > WorldOptions.screenSize.x)
         {
-            transform.position = new Vector3(-screenSize.x, transform.position.y, 0);
+            transform.position = new Vector3(-WorldOptions.screenSize.x, transform.position.y, 0);
         }
-
-        if(transform.position.y < Camera.main.transform.position.y - screenSize.y - DEATHZONE_OFFSET_Y)
+        
+        //???should it be in GameManager???
+        //falling scenario
+        if(transform.position.y < Camera.main.transform.position.y - WorldOptions.screenSize.y - DEATHZONE_OFFSET_Y)
         {
             Die();
         }
@@ -98,6 +99,4 @@ public class PlayerController : MonoBehaviour
             
         }
     }
-
-
 }
