@@ -12,8 +12,9 @@ public class GenerateUnits : MonoBehaviour
     Vector2 screenSize;
     public float GenerationBound {get;private set;}
     int unitsCount;
-    private const float BOUND_OFFSET_Y = 1f;
-    private const float SCREEN_OFFSET_X = 3f;
+    private const float GENERATIONBOUND_OFFSET_Y = 1f;
+    private const float SCREEN_OFFSET_X = 2f; //length of platform 
+    private const int NUMBER_OF_GENERATED_SCREENS = 3;
     
     void Awake()
     {
@@ -25,9 +26,10 @@ public class GenerateUnits : MonoBehaviour
 
         GenerationBound = startingPoint.position.y;
 
-        unitsCount = (int)(screenSize.y + 1 / WorldOptions.JumpHeight);
+        unitsCount = (int)((screenSize.y * 2 + 1) / WorldOptions.JumpDistance); // times too cause screenSize.y - y coordinate of object in screen axises
+
         Debug.Log("Units count: " + unitsCount); 
-        unitsCount *= 2;
+        unitsCount *= NUMBER_OF_GENERATED_SCREENS;
     }
 
     public void GenerateLayer()
@@ -35,10 +37,10 @@ public class GenerateUnits : MonoBehaviour
         for(int i = 1; i <= unitsCount; i++)
         {
             GameObject newPlatform = Instantiate(platform);
-            Vector3 newPos = new(UnityEngine.Random.Range(-screenSize.x + SCREEN_OFFSET_X, screenSize.x - SCREEN_OFFSET_X),UnityEngine.Random.Range(GenerationBound, GenerationBound + WorldOptions.JumpHeight / 4),0);
+            Vector3 newPos = new(UnityEngine.Random.Range(-screenSize.x + SCREEN_OFFSET_X / 2, screenSize.x - SCREEN_OFFSET_X / 2),UnityEngine.Random.Range(GenerationBound, GenerationBound + WorldOptions.JumpHeight / 4),0);
             newPlatform.transform.position = newPos;
             newPlatform.GetComponent<Platform>().SetPlayer(player);
-            GenerationBound = newPos.y + BOUND_OFFSET_Y;
+            GenerationBound = newPos.y + GENERATIONBOUND_OFFSET_Y;
         }
     }
     
