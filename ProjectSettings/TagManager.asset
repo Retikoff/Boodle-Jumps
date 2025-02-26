@@ -44,8 +44,11 @@ TagManager:
   - name: Clouds
     uniqueID: 1410035253
     locked: 0
-  - name: Interactable
+  - name: Platforms
     uniqueID: 3173605801
+    locked: 0
+  - name: Enemies
+    uniqueID: 4211051595
     locked: 0
   - name: Player
     uniqueID: 2442293893
