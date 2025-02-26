@@ -4,17 +4,21 @@ using UnityEngine;
 static public class WorldOptions 
 {
     #region PLAYER
-    static public float JumpHeight = 10.0f; 
-    static public float JumpDistance = 3.3f; // Just calculated during playtest
+    static public readonly float JumpHeight = 10.0f; 
+    static public readonly float JumpDistance = 3.3f; // Just calculated during playtest
     #endregion PLAYER
     
     #region GENERATION
-    static public int NumberOfGeneratingScreens = 3; 
+    static public readonly int NumberOfGeneratingScreens = 3; 
     #endregion GENERATION
     
+    #region ENEMIES
+    static public readonly float BirdSpeed = 0.95f;
+    #endregion
+
     #region CLOUDS
-    static public float CloudsFrequency = 12f;
-    static public float CloudsSpeed = 0.3f;
+    static public readonly float CloudsFrequency = 12f;
+    static public readonly float CloudsSpeed = 0.3f;
     #endregion CLOUDS
     
     #region OTHER

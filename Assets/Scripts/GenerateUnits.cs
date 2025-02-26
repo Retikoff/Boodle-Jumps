@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class GenerateUnits : MonoBehaviour
 {
-    //Удалить строчку ниже!!! 
-    [SerializeField] PlayerController player;
-    [SerializeField] Camera _camera;
     [SerializeField] Transform startingPoint;
     GameObject platform;
     public float GenerationBound {get;private set;}
     int unitsCount;
     private const float GENERATIONBOUND_OFFSET_Y = 1f;
     private const float SCREEN_OFFSET_X = 2f; //length of platform 
+    private const float JUMP_OFFSET_Y = 0.35f;
     
     void Start()
     {
@@ -30,10 +28,9 @@ public class GenerateUnits : MonoBehaviour
         {
             GameObject newPlatform = Instantiate(platform);
 
-            Vector3 newPos = new(UnityEngine.Random.Range(-WorldOptions.screenSize.x + SCREEN_OFFSET_X / 2, WorldOptions.screenSize.x - SCREEN_OFFSET_X / 2),UnityEngine.Random.Range(GenerationBound, GenerationBound + WorldOptions.JumpHeight / 4),0);
+            Vector3 newPos = new(UnityEngine.Random.Range(-WorldOptions.screenSize.x + SCREEN_OFFSET_X / 2, WorldOptions.screenSize.x - SCREEN_OFFSET_X / 2),UnityEngine.Random.Range(GenerationBound, GenerationBound + WorldOptions.JumpDistance - JUMP_OFFSET_Y),0);
             newPlatform.transform.position = newPos;
 
-            newPlatform.GetComponent<Platform>().SetPlayer(player);
             GenerationBound = newPos.y + GENERATIONBOUND_OFFSET_Y;
         }
     }

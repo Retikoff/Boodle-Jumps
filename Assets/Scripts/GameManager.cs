@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     GenerateUnits platformGenerator;
     GenerateClouds cloudGenerator;
+    GenerateEnemies enemiesGenerator;
     [SerializeField] PlayerController player;
     private const float  GENERATION_OFFSET_Y = 7f;
+    private const float DEATHZONE_OFFSET_Y = 1.5f; 
 
     void Awake()
     {
@@ -18,6 +21,8 @@ public class GameManager : MonoBehaviour
         platformGenerator.GenerateLayer();
         cloudGenerator = GetComponent<GenerateClouds>();
         cloudGenerator.GenerateLayerOfClouds();
+        enemiesGenerator = GetComponent<GenerateEnemies>();
+        enemiesGenerator.GenerateLayerOfEnemies();
     }
 
     void Update()
@@ -29,6 +34,14 @@ public class GameManager : MonoBehaviour
         
         if(player.transform.position.y >= cloudGenerator.GenerationBound - GENERATION_OFFSET_Y){
             cloudGenerator.GenerateLayerOfClouds();
+        }
+
+        if(player.transform.position.y >= enemiesGenerator.GenerationBound - GENERATION_OFFSET_Y){
+            enemiesGenerator.GenerateLayerOfEnemies();
+        }
+
+        if(player.transform.position.y <= Camera.main.transform.position.y - WorldOptions.screenSize.y - DEATHZONE_OFFSET_Y){
+            SceneManager.LoadScene(0);
         }
     }
 }

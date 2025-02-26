@@ -13,8 +13,6 @@ public class PlayerController : MonoBehaviour
     float inputX;
     Vector3 targetPos;
 
-    private const float DEATHZONE_OFFSET_Y = 1.5f; 
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,34 +43,20 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector3(-WorldOptions.screenSize.x, transform.position.y, 0);
         }
-        
-        //???should it be in GameManager???
-        //falling scenario
-        if(transform.position.y < Camera.main.transform.position.y - WorldOptions.screenSize.y - DEATHZONE_OFFSET_Y)
-        {
-            Die();
-        }
     }
 
     public void Die()
     {
-        SceneManager.LoadScene(0);
+        GetComponent<Collider2D>().enabled = false;
+        rb.linearVelocityX = 0;
+        this.enabled = false;
     }
 
     public void Jump(float distance)
     {
-        //Debug.Log("Player have jumped for " + distance + " meters");
         rb.linearVelocityY = distance;
         
         StartCoroutine(PlayAnimation());
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        IInteractable objectScript = collision.transform.gameObject.GetComponent<IInteractable>();
-        
-        objectScript?.Perform(); // if(objectScript != null) Perform()
-
     }
 
     private IEnumerator PlayAnimation()

@@ -1,22 +1,19 @@
 using UnityEngine;
 
-public class Platform : MonoBehaviour,IInteractable
+public class Platform : MonoBehaviour
 {
-    PlayerController player;
     private const float CAMERA_OFFSET_Y = 10f;
 
-    public void Perform(){
-        player.Jump(WorldOptions.JumpHeight);
-    }
-
-    //too hard connection?
-    public void SetPlayer(PlayerController player){  // should be called from generation script 
-        this.player = player;
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        var player = collision.gameObject.GetComponent<PlayerController>();
+        player?.Jump(WorldOptions.JumpHeight);
     }
 
     void Update()
     {
-        if(transform.position.y < Camera.main.transform.position.y - CAMERA_OFFSET_Y){
+        if(transform.position.y < Camera.main.transform.position.y - CAMERA_OFFSET_Y)
+        {
             Destroy(this.gameObject);
         }
     }
