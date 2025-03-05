@@ -22,8 +22,11 @@ public class GenerateEnemies : MonoBehaviour
 
     public void GenerateLayerOfEnemies()
     {
-        if(UnityEngine.Random.Range(0,101) > GenerateChance)
+        if(UnityEngine.Random.Range(0,101) > GenerateChance){
+            GenerationBound += WorldOptions.screenSize.y;
             return;
+        }
+           
         
         for(int i = 1;i<=EnemiesCount;i++)
         {
