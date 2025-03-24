@@ -465,6 +465,7 @@ GameObject:
   - component: {fileID: 126082715}
   - component: {fileID: 126082717}
   - component: {fileID: 126082718}
+  - component: {fileID: 126082719}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -541,6 +542,21 @@ MonoBehaviour:
   startingPoint: {fileID: 2028982395}
   GenerateChance: 50
   EnemiesCount: 1
+--- !u!114 &126082719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126082713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e78845c131dc704790416a4086600ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingPoint: {fileID: 2028982395}
+  GenerateChance: 35
+  BoostCount: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

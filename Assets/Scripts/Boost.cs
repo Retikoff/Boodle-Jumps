@@ -9,6 +9,7 @@ public class Boost : MonoBehaviour
         var player = collision.gameObject.GetComponent<PlayerController>();
 
         player?.Jump(boostPower * WorldOptions.JumpHeight);
+        player?.DoNotCollide();
     }
 
     void Update()

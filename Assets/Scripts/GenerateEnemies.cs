@@ -11,7 +11,6 @@ public class GenerateEnemies : MonoBehaviour
     private List<GameObject> Enemies = new List<GameObject>();
     public float GenerationBound {get; private set;}
     private const float SCREEN_OFFSET_X = 2f;
-    private const float GENERATIONBOUND_OFFSET_Y = 4f;
 
     void Awake()
     {
@@ -30,18 +29,11 @@ public class GenerateEnemies : MonoBehaviour
         
         for(int i = 1;i<=EnemiesCount;i++)
         {
-            try
-            { // I dont remember how i fix it so try catch stays
-                var newEnemy = Instantiate(Enemies[UnityEngine.Random.Range(0,Enemies.Count)]);
-                Vector3 newPos = new(UnityEngine.Random.Range(-WorldOptions.screenSize.x + SCREEN_OFFSET_X / 2, WorldOptions.screenSize.x - SCREEN_OFFSET_X / 2),UnityEngine.Random.Range(GenerationBound, GenerationBound + WorldOptions.screenSize.y),0);
-                newEnemy.transform.position = newPos;
+            var newEnemy = Instantiate(Enemies[UnityEngine.Random.Range(0,Enemies.Count)]);
+            Vector3 newPos = new(UnityEngine.Random.Range(-WorldOptions.screenSize.x + SCREEN_OFFSET_X / 2, WorldOptions.screenSize.x - SCREEN_OFFSET_X / 2),UnityEngine.Random.Range(GenerationBound, GenerationBound + WorldOptions.screenSize.y),0);
+            newEnemy.transform.position = newPos;
 
-                GenerationBound = newPos.y + GENERATIONBOUND_OFFSET_Y;
-            }
-            catch(Exception e)
-            {
-                Debug.Log(e);
-            }
+            GenerationBound = newPos.y + WorldOptions.screenSize.y;
         }
     }
 }

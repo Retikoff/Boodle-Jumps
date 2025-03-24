@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5376998735260279403}
   - component: {fileID: 6529478842277878195}
   - component: {fileID: -7782157035342493675}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Bird
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ CapsuleCollider2D:
     m_Bits: 4294967295
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 311
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
