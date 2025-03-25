@@ -513,7 +513,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc43e9d764e0b64182c0fe08985f8a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  platform: {fileID: 4072504834530352318, guid: c194e463181e57e45b03d57793d4ad22, type: 3}
+  cloud: {fileID: 8074520356348143295, guid: c35ab422ea47feb4dba40ff06a93bac4, type: 3}
+  bee: {fileID: 0}
+  bird: {fileID: 0}
+  twoBoost: {fileID: 0}
+  threeBoost: {fileID: 0}
   player: {fileID: 37645781}
+  startPoint: {fileID: 2028982395}
 --- !u!114 &126082717
 MonoBehaviour:
   m_ObjectHideFlags: 0
