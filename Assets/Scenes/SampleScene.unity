@@ -462,10 +462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 126082714}
   - component: {fileID: 126082716}
-  - component: {fileID: 126082715}
-  - component: {fileID: 126082717}
-  - component: {fileID: 126082718}
-  - component: {fileID: 126082719}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -488,19 +484,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &126082715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126082713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba3cadd42e7ef2442b13e63f9765db40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingPoint: {fileID: 2028982395}
 --- !u!114 &126082716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,55 +498,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platform: {fileID: 4072504834530352318, guid: c194e463181e57e45b03d57793d4ad22, type: 3}
   cloud: {fileID: 8074520356348143295, guid: c35ab422ea47feb4dba40ff06a93bac4, type: 3}
-  bee: {fileID: 0}
-  bird: {fileID: 0}
-  twoBoost: {fileID: 0}
-  threeBoost: {fileID: 0}
+  bee: {fileID: 3125303652284288378, guid: e4592583aa7553d49bd67fc846220d2f, type: 3}
+  bird: {fileID: 4899894563754504218, guid: ab743092bed60cb49aa34e7e21f84d55, type: 3}
+  boostTwo: {fileID: 3043513526327726721, guid: 0c8e2ba4e46bdc342b0ce8453540dbb1, type: 3}
+  boostThree: {fileID: 5491500101118853210, guid: a3c76167af11d3647b5fdb7a1f79399c, type: 3}
   player: {fileID: 37645781}
   startPoint: {fileID: 2028982395}
---- !u!114 &126082717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126082713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40ffc87360fd94946a7fbe4cece1e2cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingPoint: {fileID: 2028982395}
---- !u!114 &126082718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126082713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f602612ad0a825243a1304806955dea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingPoint: {fileID: 2028982395}
-  GenerateChance: 50
-  EnemiesCount: 1
---- !u!114 &126082719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 126082713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e78845c131dc704790416a4086600ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingPoint: {fileID: 2028982395}
-  GenerateChance: 35
-  BoostCount: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

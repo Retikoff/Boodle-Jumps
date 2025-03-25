@@ -6,12 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // GenerateUnits platformGenerator;
-    // GenerateClouds cloudGenerator;
-    // GenerateEnemies enemiesGenerator;
-    // GenerateBoosts boostsGenerator;
-    private Generator platformGenerator, cloudGenerator, beeGenerator, birdGenerator, twoBoostsGenerator, threeBoostsGenerator;
-    [SerializeField] GameObject platform, cloud, bee, bird, twoBoost, threeBoost;
+    private Generator platformGenerator, cloudGenerator, beeGenerator, birdGenerator, boostTwoGenerator, boostThreeGenerator;
+    [SerializeField] GameObject platform, cloud, bee, bird, boostTwo, boostThree;
     [SerializeField] PlayerController player;
     [SerializeField] Transform startPoint;
     private List<Sprite> cloudSprites;
@@ -23,30 +19,31 @@ public class GameManager : MonoBehaviour
     {
         WorldOptions.screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
         print(SystemInfo.graphicsDeviceName);
-        for(int i = 1; i<= 9; i++){
-            //NullReferenceExceptions
+        cloudSprites = new List<Sprite>();
+        for(int i = 1; i <= 9; i++){
             cloudSprites.Add(Resources.Load<Sprite>(cloudResourcesPattern + i));
         }
-
-        Debug.Log(cloudSprites.Count);
-        Debug.Log(cloudSprites[8]);
     }
 
     void Start()
-    {       //Get rid of warning here
-        platformGenerator = new Generator(platform, startPoint.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.JumpDistance) * WorldOptions.NumberOfGeneratingScreens,WorldOptions.JumpDistance - JUMP_OFFSET_Y, 100, 1f);
+    {       
+        platformGenerator = Generator.CreateGenerator(platform, startPoint.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.JumpDistance) * WorldOptions.NumberOfGeneratingScreens,WorldOptions.JumpDistance - JUMP_OFFSET_Y, 100, 1f);
         platformGenerator.GenerateLayer();
 
-        cloudGenerator = new Generator(cloud,startPoint.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.CloudsFrequency) * WorldOptions.NumberOfGeneratingScreens,WorldOptions.CloudsFrequency, 100,1f);
+        cloudGenerator = Generator.CreateGenerator(cloud,startPoint.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.CloudsFrequency) * (WorldOptions.NumberOfGeneratingScreens - 1),WorldOptions.CloudsFrequency, 100, 2f, true, cloudSprites);
         cloudGenerator.GenerateLayer();
-        // platformGenerator = GetComponent<GenerateUnits>();
-        // platformGenerator.GenerateLayer();
-        // cloudGenerator = GetComponent<GenerateClouds>();
-        // cloudGenerator.GenerateLayerOfClouds();
-        // enemiesGenerator = GetComponent<GenerateEnemies>();
-        // enemiesGenerator.GenerateLayerOfEnemies();
-        // boostsGenerator = GetComponent<GenerateBoosts>();
-        // boostsGenerator.GenerateLayerOfBoosts();
+
+        beeGenerator = Generator.CreateGenerator(bee, startPoint.position, 1, WorldOptions.screenSize.y, 40, WorldOptions.screenSize.y);
+        beeGenerator.GenerateLayer();
+
+        birdGenerator = Generator.CreateGenerator(bird, startPoint.position, 1, WorldOptions.screenSize.y, 20, WorldOptions.screenSize.y * 2);
+        birdGenerator.GenerateLayer();
+
+        boostTwoGenerator = Generator.CreateGenerator(boostTwo, startPoint.position, 1, WorldOptions.screenSize.y, 35, WorldOptions.screenSize.y * 2);
+        boostTwoGenerator.GenerateLayer();
+
+        boostThreeGenerator = Generator.CreateGenerator(boostThree, startPoint.position, 1, WorldOptions.screenSize.y, 14, WorldOptions.screenSize.y * 5);
+        boostThreeGenerator.GenerateLayer();
     }
 
     void Update()
@@ -57,17 +54,24 @@ public class GameManager : MonoBehaviour
         }
         
         if(player.transform.position.y >= cloudGenerator.GenerationBound - GENERATION_OFFSET_Y){
-            cloud.GetComponent<SpriteRenderer>().sprite = cloudSprites[UnityEngine.Random.Range(0,9)];
             cloudGenerator.GenerateLayer();
         }
 
-        // if(player.transform.position.y >= enemiesGenerator.GenerationBound - GENERATION_OFFSET_Y){
-        //     enemiesGenerator.GenerateLayerOfEnemies();
-        // }
+        if(player.transform.position.y >= beeGenerator.GenerationBound - GENERATION_OFFSET_Y){
+            beeGenerator.GenerateLayer();
+        }
 
-        // if(player.transform.position.y >= boostsGenerator.GenerationBound - GENERATION_OFFSET_Y){
-        //     boostsGenerator.GenerateLayerOfBoosts();
-        // }
+        if(player.transform.position.y >= birdGenerator.GenerationBound - GENERATION_OFFSET_Y){
+            birdGenerator.GenerateLayer();
+        }
+
+        if(player.transform.position.y >= boostTwoGenerator.GenerationBound - GENERATION_OFFSET_Y){
+            boostTwoGenerator.GenerateLayer();
+        }
+
+        if(player.transform.position.y >= boostThreeGenerator.GenerationBound - GENERATION_OFFSET_Y){
+            boostThreeGenerator.GenerateLayer();
+        }
 
         if(player.transform.position.y <= Camera.main.transform.position.y - WorldOptions.screenSize.y - DEATHZONE_OFFSET_Y){
             SceneManager.LoadScene(0);

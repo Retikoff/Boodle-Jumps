@@ -17,7 +17,7 @@ static public class WorldOptions
     #endregion
 
     #region CLOUDS
-    static public readonly float CloudsFrequency = 12f;
+    static public readonly float CloudsFrequency = 10f;
     static public readonly float CloudsSpeed = 0.3f;
     #endregion CLOUDS
     
