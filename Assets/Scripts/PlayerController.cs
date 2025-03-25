@@ -17,10 +17,10 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer _renderer;
     float inputX;
     Vector3 targetPos;
-    private int ForceLayers = 384; //bitMask for Enemies, Platform (1100 0000)x0 = 192 * 2 = 384
-    private int ForceLayersWhileFlying = 256; //bitMask for Enemies (1000 0000)x0 = 128 * 2 = 256
-    private int ContactLayers = 448; //bitMask for Interactable, Platform, Enemies (1110 0000)x0 = 224 * 2 = 448
-    private int ContactLayersWhileFlying = 320; //bitMask for Interactable, Enemies (1010 0000)x0 = 160 * 2 = 320 
+    private int ForceLayers;
+    private int ForceLayersWhileFlying;
+    private int ContactLayers; 
+    private int ContactLayersWhileFlying;  
     
     private void Start()
     {
@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
         _renderer = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
+        ForceLayers = LayerMask.GetMask("Enemies","Platform");
+        ForceLayersWhileFlying = LayerMask.GetMask("Enemies");
+        ContactLayers = LayerMask.GetMask("Interactable","Platform","Enemies");
+        ContactLayersWhileFlying = LayerMask.GetMask("Interactable","Enemies");
     }
 
     private void Update()

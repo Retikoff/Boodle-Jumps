@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         WorldOptions.screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
+        print(SystemInfo.graphicsDeviceName);
     }
 
     void Start()
