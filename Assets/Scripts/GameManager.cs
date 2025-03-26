@@ -26,8 +26,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] int boostThreeChanceToSpawn;
     [SerializeField] int boostThreeCount;
     [SerializeField] PlayerController player;
-    [SerializeField] Transform startPoint;
+    [SerializeField] Transform startPointForEnvironment;
+    [SerializeField] Transform startPointForInteractables;
     [SerializeField] TextMeshProUGUI scoreLabel;
+    [SerializeField] Canvas DeathScreen;
+    
     private int highScore = 0;
     private List<Sprite> cloudSprites;
     private const float  GENERATION_OFFSET_Y = 7f;
@@ -42,26 +45,27 @@ public class GameManager : MonoBehaviour
         for(int i = 1; i <= 9; i++){
             cloudSprites.Add(Resources.Load<Sprite>("Cloud" + i));
         }
+        DeathScreen.enabled = false;
     }
 
     void Start()
     {       
-        platformGenerator = Generator.CreateGenerator(platform, startPoint.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.JumpDistance) * WorldOptions.NumberOfGeneratingScreens,WorldOptions.JumpDistance - JUMP_OFFSET_Y, platformChanceToSpawn, 1f);
+        platformGenerator = Generator.CreateGenerator(platform, startPointForEnvironment.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.JumpDistance) * WorldOptions.NumberOfGeneratingScreens,WorldOptions.JumpDistance - JUMP_OFFSET_Y, platformChanceToSpawn, 1f);
         platformGenerator.GenerateLayer();
 
-        cloudGenerator = Generator.CreateGenerator(cloud,startPoint.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.CloudsFrequency) * (WorldOptions.NumberOfGeneratingScreens - 1),WorldOptions.CloudsFrequency, cloudChanceToSpawn, 2f, true, cloudSprites);
+        cloudGenerator = Generator.CreateGenerator(cloud,startPointForEnvironment.position, (int)((WorldOptions.screenSize.y * 2 + 1) / WorldOptions.CloudsFrequency) * (WorldOptions.NumberOfGeneratingScreens - 1),WorldOptions.CloudsFrequency, cloudChanceToSpawn, 2f, true, cloudSprites);
         cloudGenerator.GenerateLayer();
 
-        beeGenerator = Generator.CreateGenerator(bee, startPoint.position, beeCount, WorldOptions.screenSize.y, beeChanceToSpawn, WorldOptions.screenSize.y);
+        beeGenerator = Generator.CreateGenerator(bee, startPointForInteractables.position, beeCount, WorldOptions.screenSize.y, beeChanceToSpawn, WorldOptions.screenSize.y);
         beeGenerator.GenerateLayer();
 
-        birdGenerator = Generator.CreateGenerator(bird, startPoint.position, birdCount, WorldOptions.screenSize.y, birdChanceToSpawn, WorldOptions.screenSize.y * 2);
+        birdGenerator = Generator.CreateGenerator(bird, startPointForInteractables.position, birdCount, WorldOptions.screenSize.y, birdChanceToSpawn, WorldOptions.screenSize.y * 2);
         birdGenerator.GenerateLayer();
 
-        boostTwoGenerator = Generator.CreateGenerator(boostTwo, startPoint.position, boostTwoCount, WorldOptions.screenSize.y, boostTwoChanceToSpawn, WorldOptions.screenSize.y * 2);
+        boostTwoGenerator = Generator.CreateGenerator(boostTwo, startPointForInteractables.position, boostTwoCount, WorldOptions.screenSize.y, boostTwoChanceToSpawn, WorldOptions.screenSize.y * 2);
         boostTwoGenerator.GenerateLayer();
 
-        boostThreeGenerator = Generator.CreateGenerator(boostThree, startPoint.position, boostThreeCount, WorldOptions.screenSize.y, boostThreeChanceToSpawn, WorldOptions.screenSize.y * 5);
+        boostThreeGenerator = Generator.CreateGenerator(boostThree, startPointForInteractables.position, boostThreeCount, WorldOptions.screenSize.y, boostThreeChanceToSpawn, WorldOptions.screenSize.y * 5);
         boostThreeGenerator.GenerateLayer();
     }
 
@@ -98,7 +102,24 @@ public class GameManager : MonoBehaviour
         }
 
         if(player.transform.position.y <= Camera.main.transform.position.y - WorldOptions.screenSize.y - DEATHZONE_OFFSET_Y){
-            SceneManager.LoadScene(0);
+            player.Freeze();
+            DeathScreen.enabled = true;
+        }
+    }
+
+    public void RestartGame(){
+        SceneManager.LoadScene(0);
+    }
+
+    private void OnGUI() // only for debug 
+    {
+        if (GUI.Button(new Rect(0, 0, 100, 50), "Jump"))
+        {
+            player.Jump(10f);
+        }
+
+        if(GUI.Button(new Rect(110,0,100,50), "DeathScreen")){
+            DeathScreen.enabled = !DeathScreen.isActiveAndEnabled;
         }
     }
 }

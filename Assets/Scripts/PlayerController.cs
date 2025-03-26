@@ -64,12 +64,16 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         _collider.enabled = false;
-        rb.linearVelocityX = -0.5f;
+        rb.linearVelocityY = -0.5f;
         rb.linearVelocityX = 0;
         this.enabled = false;
     }
 
-   
+    public void Freeze(){
+        rb.linearVelocityY = 0f;
+        rb.gravityScale = 0;
+    }
+
     public void Jump(float distance)
     {
         rb.linearVelocityY = distance;
@@ -96,20 +100,5 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         anim.SetBool("inAir", true);
-    }
-    
-    private void OnGUI() // only for debug 
-    {
-        if (GUI.Button(new Rect(0, 0, 100, 50), "SetHigh"))
-        {
-            targetPos = new Vector3(transform.position.x, transform.position.y + 10f, transform.position.z);
-            transform.position = targetPos;
-            
-        }
-
-        if (GUI.Button(new Rect(110, 0, 100, 50), "Jump"))
-        {
-            this.Jump(10f);
-        }
     }
 }
