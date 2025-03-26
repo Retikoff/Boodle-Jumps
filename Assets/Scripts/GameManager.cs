@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -26,20 +27,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] int boostThreeCount;
     [SerializeField] PlayerController player;
     [SerializeField] Transform startPoint;
-
+    [SerializeField] TextMeshProUGUI scoreLabel;
+    private int highScore = 0;
     private List<Sprite> cloudSprites;
-    private const string cloudResourcesPattern = "Cloud";
     private const float  GENERATION_OFFSET_Y = 7f;
     private const float DEATHZONE_OFFSET_Y = 1.5f; 
     private const float JUMP_OFFSET_Y = 0.35f;
-    
+
     void Awake()
     {
         WorldOptions.screenSize = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width,Screen.height));
         print(SystemInfo.graphicsDeviceName);
         cloudSprites = new List<Sprite>();
         for(int i = 1; i <= 9; i++){
-            cloudSprites.Add(Resources.Load<Sprite>(cloudResourcesPattern + i));
+            cloudSprites.Add(Resources.Load<Sprite>("Cloud" + i));
         }
     }
 
@@ -89,6 +90,11 @@ public class GameManager : MonoBehaviour
 
         if(player.transform.position.y >= boostThreeGenerator.GenerationBound - GENERATION_OFFSET_Y){
             boostThreeGenerator.GenerateLayer();
+        }
+
+        if(player.transform.position.y > highScore){
+            highScore = (int)player.transform.position.y;
+            scoreLabel.text = highScore.ToString();
         }
 
         if(player.transform.position.y <= Camera.main.transform.position.y - WorldOptions.screenSize.y - DEATHZONE_OFFSET_Y){
