@@ -497,11 +497,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   platform: {fileID: 4072504834530352318, guid: c194e463181e57e45b03d57793d4ad22, type: 3}
+  platformChanceToSpawn: 100
   cloud: {fileID: 8074520356348143295, guid: c35ab422ea47feb4dba40ff06a93bac4, type: 3}
+  cloudChanceToSpawn: 100
   bee: {fileID: 3125303652284288378, guid: e4592583aa7553d49bd67fc846220d2f, type: 3}
+  beeChanceToSpawn: 40
+  beeCount: 1
   bird: {fileID: 4899894563754504218, guid: ab743092bed60cb49aa34e7e21f84d55, type: 3}
+  birdChanceToSpawn: 20
+  birdCount: 1
   boostTwo: {fileID: 3043513526327726721, guid: 0c8e2ba4e46bdc342b0ce8453540dbb1, type: 3}
+  boostTwoChanceToSpawn: 25
+  boostTwoCount: 1
   boostThree: {fileID: 5491500101118853210, guid: a3c76167af11d3647b5fdb7a1f79399c, type: 3}
+  boostThreeChanceToSpawn: 10
+  boostThreeCount: 1
   player: {fileID: 37645781}
   startPoint: {fileID: 2028982395}
 --- !u!1 &519420028
